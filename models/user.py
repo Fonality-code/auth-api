@@ -1,7 +1,7 @@
 from beanie import Document, Indexed
 from pydantic import BaseModel, field_validator
 from hashlib import md5
-from typing import Annotated
+from typing import Annotated, Optional
 
 
 class User(Document):
@@ -13,6 +13,8 @@ class User(Document):
     email_verified: bool = False
     phone_number: str | None = None
     phone_number_verified: bool = False
+    profile_picture: str | None = None
+    meta_data: dict = {}
 
     class Meta:
         collection = "users"
@@ -33,4 +35,8 @@ class CreateUser(BaseModel):
 
 
 class UpdateUser(BaseModel):
-    pass
+    first_name: str | None = None
+    last_name: str | None = None
+    phone_number: str | None = None
+    meta_data: dict | None = {}
+    
