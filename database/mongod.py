@@ -8,10 +8,10 @@ from mongomock_motor import AsyncMongoMockClient
 
 
 # models
+from models.user import User
 
 
-
-documents = []
+documents = [User]
 
 
 async def init_db():
