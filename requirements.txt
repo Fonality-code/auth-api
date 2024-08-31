@@ -1,0 +1,17 @@
+fastapi
+pydantic
+pydantic-settings
+pydantic_core
+pymongo
+python-dotenv
+uvicorn
+starlette
+fastapi-versioning
+beanie
+pytest
+httpx
+asgi_lifespan
+pytest-asyncio
+black
+mongomock
+mongomock-motor
