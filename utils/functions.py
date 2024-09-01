@@ -1,14 +1,15 @@
 import jwt
 import uuid
 from datetime import datetime, timedelta
+from config.config import Settings
 
-SECRET_KEY = "your_secret_key"
+SECRET_KEY = Settings().SECRET_KEY
 ALGORITHM = "HS256"
 
 
-def create_refresh_token(data: dict, unique_id: str = None, exp_days: int = 30):
-    if unique_id is None:
-        unique_id = str(uuid.uuid4())  # Generate a unique random ID if not provided
+def create_refresh_token(data: dict, exp_days: int = 30):
+
+    unique_id = str(uuid.uuid4())
 
     refresh_token_payload = {
         "sub": unique_id,
@@ -32,7 +33,7 @@ def create_access_token_from_refresh_token(refresh_token: str):
         access_token_payload = {
             "sub": payload.get("sub"),
             "data": data,
-            "exp": datetime.utcnow()
+            "exp": datetime.now()
             + timedelta(minutes=15),  # Access token valid for 15 minutes
         }
 
@@ -72,3 +73,14 @@ def validate_access_token(access_token: str, refresh_token: str):
         raise ValueError("Access token has expired")
     except jwt.InvalidTokenError:
         raise ValueError("Invalid access token")
+
+
+# return token data if token is fine
+def decode_token(token: str):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return payload.get("data")
+    except jwt.ExpiredSignatureError:
+        raise ValueError("Token has expired")
+    except jwt.InvalidTokenError:
+        raise ValueError("Invalid token")

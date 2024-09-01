@@ -16,3 +16,8 @@ black
 mongomock
 mongomock-motor
 pyjwt
+python-multipart
+requests
+
+itsdangerous
+Werkzeug

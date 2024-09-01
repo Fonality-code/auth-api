@@ -6,17 +6,19 @@ from typing import Annotated, Optional
 
 class User(Document):
     email: Annotated[str, Indexed(unique=True)]
-    password: str
+    password: str | None = None
     first_name: str | None = None
     last_name: str | None = None
     status: str = "active"
     email_verified: bool = False
     phone_number: str | None = None
     phone_number_verified: bool = False
-    profile_picture: str | None = None
+    picture: str | None = None
     meta_data: dict = {}
+    google_id: str | None = None
+    refresh_token: str | None = None
 
-    class Meta:
+    class Config:
         collection = "users"
 
 
@@ -39,4 +41,3 @@ class UpdateUser(BaseModel):
     last_name: str | None = None
     phone_number: str | None = None
     meta_data: dict | None = {}
-    
